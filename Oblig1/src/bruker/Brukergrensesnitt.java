@@ -1,5 +1,6 @@
 package bruker;
 
+import java.io.IOException;
 import java.util.Scanner;
 import spill.Stigespill;
 import spillkomponenter.Brikke;
@@ -53,7 +54,10 @@ public class Brukergrensesnitt {
 		Stigespill spill = new Stigespill(brikker);
 		
 		System.out.println("Trykk ENTER for å starte spill");
-		scanner.next();
+		try {
+			System.in.read();
+		} catch (IOException e) {}
+		
 		spill.start();
 		
 	}

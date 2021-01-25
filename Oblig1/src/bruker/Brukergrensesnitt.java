@@ -12,6 +12,9 @@ public class Brukergrensesnitt {
 		this.scanner = new Scanner(System.in);
 	}
 	
+	/**
+	 * Starter brukergresesnittet
+	 */
 	public void start() {
 		System.out.println("Velg fra 2-4 spillere: ");
 		int antallSpillere = 0;

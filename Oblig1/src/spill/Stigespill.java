@@ -19,6 +19,9 @@ public class Stigespill {
 		this.terning = new Terning();
 	}
 	
+	/**
+	 * Starter spillet, utfører runder til spillet er vunnet.
+	 */
 	public void start() {
 		boolean harVunnet = false;
 		Logg logg = null;
@@ -47,10 +50,18 @@ public class Stigespill {
 		}
 	}
 	
+	/**
+	 * Skriver ut vinneren av spillet
+	 * @param brikke Brikken som har vunnet
+	 */
 	private void skrivVinner(Brikke brikke) {
 		System.out.println(brikke.getFarge() + " brikke vant spillet på runde " + runde);
 	}
 	
+	/**
+	 * Skriver passende logg for hver tur som spilles
+	 * @param logg Logg-objekt som inneholder detaljer for tur som skal skrives
+	 */
 	private void skrivLogg(Logg logg) {
 		String temp = "flyttet seg fra rute " + (logg.getStartPos() + 1) + " til rute " + (logg.getSluttPos() + 1);
 		if(logg.getLink() > -1) {

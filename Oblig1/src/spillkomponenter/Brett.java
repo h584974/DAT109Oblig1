@@ -8,6 +8,11 @@ public class Brett {
 		ruter = lagRuter(100);
 	}
 	
+	/**
+	 * Oppretter ruter til brettet og setter hvilke som er slanger og hvilke som er stiger.
+	 * @param antallRuter Antall ruter som skal opprettes
+	 * @return Tabell av ruter
+	 */
 	private Rute[] lagRuter(int antallRuter) {
 		Rute[] ruter = new Rute[antallRuter];
 		
@@ -35,43 +40,50 @@ public class Brett {
 		return ruter;
 	}
 	
-	public boolean spillTur(Brikke b, int kast, Logg logg) {
+	/**
+	 * Spiller turen til en brikke, sjekker for eventuelle slanger/stiger og om brikken vinner
+	 * @param brikke Brikke som sin tur skal spilles
+	 * @param kast Brikken sitt terningkast for turen
+	 * @param logg Logg-objekt hvor detaljer for turen lagres
+	 * @return Bolsk verdi, om brikken har vunnet eller ikke
+	 */
+	public boolean spillTur(Brikke brikke, int kast, Logg logg) {
 		boolean harVunnet = false;
-		logg.setFarge(b.getFarge());
-		logg.setStartPos(b.getPosisjon());
+		logg.setFarge(brikke.getFarge());
+		logg.setStartPos(brikke.getPosisjon());
 		logg.setKast(kast);
 		
-		if(b.getFanget()) {
+		if(brikke.getFanget()) {
 			if(kast == 6) {
-				b.setPosisjon(b.getPosisjon() + kast);
+				brikke.setPosisjon(brikke.getPosisjon() + kast);
 			}
 		}
-		else if(kast == 6 && b.getFoersteKast() == 6 && b.getSisteKast() == 6) {
-			b.setPosisjon(0);
-			b.setFanget(true);
-			b.oppdaterKast(-1);
+		else if(kast == 6 && brikke.getFoersteKast() == 6 && brikke.getSisteKast() == 6) {
+			brikke.setPosisjon(0);
+			brikke.setFanget(true);
+			brikke.oppdaterKast(-1);
 			logg.setFanget(true);
 		}
 		else {
-			int tempPos = b.getPosisjon() + kast;
+			int tempPos = brikke.getPosisjon() + kast;
 			
 			if(tempPos < 99) {
 				int linkPos = ruter[tempPos].getLink();
 				if(linkPos == -1) {
-					b.setPosisjon(tempPos);
+					brikke.setPosisjon(tempPos);
 				}
 				else {
-					logg.setLink(b.getPosisjon() + kast);
-					b.setPosisjon(linkPos);
+					logg.setLink(brikke.getPosisjon() + kast);
+					brikke.setPosisjon(linkPos);
 				}
 			}
 			else if(tempPos == 99) {
-				b.setPosisjon(tempPos);
+				brikke.setPosisjon(tempPos);
 				harVunnet = true;
 			}
 		}
 		
-		logg.setSluttPos(b.getPosisjon());
+		logg.setSluttPos(brikke.getPosisjon());
 		
 		return harVunnet;
 	}

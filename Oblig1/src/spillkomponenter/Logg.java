@@ -5,7 +5,7 @@ public class Logg {
 	private boolean fanget;
 	private int startPos;
 	private int sluttPos;
-	private String brikke;
+	private String farge;
 	private int link;
 	private int kast;
 	
@@ -13,7 +13,7 @@ public class Logg {
 		fanget = false;
 		startPos = -1;
 		sluttPos = -1;
-		brikke = null;
+		farge = null;
 		link = -1;
 		kast = 0;
 	}
@@ -58,12 +58,12 @@ public class Logg {
 		this.sluttPos = sluttPos;
 	}
 
-	public String getBrikke() {
-		return brikke;
+	public String getFarge() {
+		return farge;
 	}
 
-	public void setBrikke(String brikke) {
-		this.brikke = brikke;
+	public void setFarge(String farge) {
+		this.farge = farge;
 	}
 
 }

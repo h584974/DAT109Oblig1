@@ -1,7 +1,5 @@
 package spillkomponenter;
 
-import java.util.Random;
-
 public class Brett {
 	
 	private Rute[] ruter;
@@ -37,11 +35,9 @@ public class Brett {
 		return ruter;
 	}
 	
-	public boolean spillTur(Brikke b) {
+	public boolean spillTur(Brikke b, int kast, Logg logg) {
 		boolean harVunnet = false;
-		int kast = kastTerning();
-		Logg logg = new Logg();
-		logg.setBrikke(b.getFarge());
+		logg.setFarge(b.getFarge());
 		logg.setStartPos(b.getPosisjon());
 		logg.setKast(kast);
 		
@@ -53,6 +49,7 @@ public class Brett {
 		else if(kast == 6 && b.getFoersteKast() == 6 && b.getSisteKast() == 6) {
 			b.setPosisjon(0);
 			b.setFanget(true);
+			b.oppdaterKast(-1);
 			logg.setFanget(true);
 		}
 		else {
@@ -73,39 +70,10 @@ public class Brett {
 				harVunnet = true;
 			}
 		}
-		logg.setSluttPos(b.getPosisjon());
-		skrivLogg(logg);
 		
-		try {
-			Thread.sleep(200);
-		}
-		catch(Throwable e) {}
+		logg.setSluttPos(b.getPosisjon());
 		
 		return harVunnet;
-	}
-	
-	private void skrivLogg(Logg logg) {
-		String temp = "flyttet seg fra rute " + (logg.getStartPos() + 1) + " til rute " + (logg.getSluttPos() + 1);
-		if(logg.getLink() > -1) {
-			if(logg.getStartPos() > logg.getSluttPos()) {
-				temp = "traff en slange, falt fra rute " + (logg.getLink() + 1) + " til rute " + (logg.getSluttPos() + 1);
-			}
-			else {
-				temp = "traff en stige, klatret fra rute " + (logg.getLink() + 1) + " til rute " + (logg.getSluttPos() + 1);
-			}
-		}
-		else if(logg.isFanget()) {
-			temp = "flyttet ikke på seg, trenger terningkast 6 for å gå videre";
-		}
- 		else if(logg.getStartPos() == logg.getSluttPos()) {
-			temp = "flyttet ikke på seg, " + (99 - logg.getSluttPos()) + " ruter fra mål!";
-		}
-		System.out.println(logg.getBrikke() + " brikke trillet " + logg.getKast() + " på terningen og " + temp);
-	}
-	
-	private int kastTerning() {
-		Random r = new Random();
-		return r.nextInt(6) + 1;
 	}
 
 }

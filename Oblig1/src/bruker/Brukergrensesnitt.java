@@ -67,7 +67,7 @@ public class Brukergrensesnitt {
 	/**
 	 * Starter spillet, spiller brikker sin tur sekvensielt til spillet er vunnet eller avbrutt.
 	 */
-	public void startSpill() {
+	private void startSpill() {
 		while(!spill.harVunnet()) {
 			System.out.println("Vil du kaste terningen for " + spill.getNesteBrikke() + " sin tur? Y / N");
 			String svar = scanner.next();

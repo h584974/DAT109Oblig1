@@ -16,7 +16,7 @@ public class Brukergrensesnitt {
 	}
 	
 	/**
-	 * Starter brukergresesnittet, får bruker til å velge antall spillere og farge på brikker 
+	 * Starter brukergresesnittet, får bruker til å velge antall spillere og farge på brikker,
 	 * og så starter spillet.
 	 */
 	public void start() {

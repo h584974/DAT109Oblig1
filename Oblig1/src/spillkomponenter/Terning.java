@@ -10,7 +10,7 @@ public class Terning {
 	
 	/**
 	 * Simulerer terningkast
-	 * @return Verdi for kastet, mellom 1-6
+	 * @return Verdi for kastet, fra 1-6
 	 */
 	public int kastTerning() {
 		return random.nextInt(6) + 1;

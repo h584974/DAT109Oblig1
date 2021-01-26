@@ -23,7 +23,7 @@ public class BrettTest {
 	public void testSisteOgFoersteKast() {
 		brett.spillTur(b1, 6, logg);
 		brett.spillTur(b1, 3, logg);
-		Assertions.assertEquals(b1.getFoersteKast(),6);
+		Assertions.assertEquals(b1.getForrigeKast(),6);
 		Assertions.assertEquals(b1.getSisteKast(),3);
 	}
 	

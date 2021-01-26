@@ -41,8 +41,8 @@ public class Brett {
 	}
 	
 	/**
-	 * Spiller turen til en brikke, sjekker for eventuelle slanger/stiger og om brikken vinner
-	 * @param brikke Brikke som sin tur skal spilles
+	 * Spiller turen til en brikke, flytter brikken og sjekker for eventuelle slanger/stiger, og om brikken vinner
+	 * @param brikke Brikken som sin tur skal spilles
 	 * @param kast Brikken sitt terningkast for turen
 	 * @param logg Logg-objekt hvor detaljer for turen lagres
 	 * @return Bolsk verdi, om brikken har vunnet eller ikke
@@ -58,7 +58,7 @@ public class Brett {
 				brikke.setFanget(false);
 			}
 		}
-		else if(kast == 6 && brikke.getFoersteKast() == 6 && brikke.getSisteKast() == 6) {
+		else if(kast == 6 && brikke.getForrigeKast() == 6 && brikke.getSisteKast() == 6) {
 			brikke.setPosisjon(0);
 			brikke.setFanget(true);
 			brikke.oppdaterKast(kast);

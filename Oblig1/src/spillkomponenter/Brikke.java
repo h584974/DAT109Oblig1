@@ -5,14 +5,14 @@ public class Brikke {
 	private int posisjon;
 	private String farge;
 	private int sisteKast;
-	private int foersteKast;
+	private int forrigeKast;
 	private boolean fanget;
 	
 	public Brikke(String farge) {
 		this.posisjon = 0;
 		this.farge = farge;
 		this.sisteKast = 0;
-		this.foersteKast = 0;
+		this.forrigeKast = 0;
 		this.fanget = false;
 	}
 	
@@ -36,16 +36,20 @@ public class Brikke {
 		return this.sisteKast;
 	}
 	
-	public int getFoersteKast() {
-		return this.foersteKast;
+	public int getForrigeKast() {
+		return this.forrigeKast;
 	}
 	
 	public String getFarge() {
 		return this.farge;
 	}
 	
+	/**
+	 * Oppdaterer siste og forrige kast til brikken
+	 * @param kast Settes som siste kast
+	 */
 	public void oppdaterKast(int kast) {
-		foersteKast = sisteKast;
+		forrigeKast = sisteKast;
 		sisteKast = kast;
 	}
 	

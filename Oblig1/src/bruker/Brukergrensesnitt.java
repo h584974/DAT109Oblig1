@@ -8,13 +8,16 @@ import spillkomponenter.Brikke;
 public class Brukergrensesnitt {
 	
 	private Scanner scanner;
+	private Stigespill spill;
 	
 	public Brukergrensesnitt() {
 		this.scanner = new Scanner(System.in);
+		this.spill = null;
 	}
 	
 	/**
-	 * Starter brukergresesnittet
+	 * Starter brukergresesnittet, får bruker til å velge antall spillere og farge på brikker 
+	 * og så starter spillet.
 	 */
 	public void start() {
 		System.out.println("Velg fra 2-4 spillere: ");
@@ -51,15 +54,32 @@ public class Brukergrensesnitt {
 			brikker[i] = new Brikke(farge);
 		}
 		
-		Stigespill spill = new Stigespill(brikker);
+		spill = new Stigespill(brikker);
 		
 		System.out.println("Trykk ENTER for å starte spill");
 		try {
 			System.in.read();
 		} catch (IOException e) {}
 		
-		spill.start();
+		startSpill();		
+	}
+	
+	/**
+	 * Starter spillet, spiller brikker sin tur sekvensielt til spillet er vunnet eller avbrutt.
+	 */
+	public void startSpill() {
+		while(!spill.harVunnet()) {
+			System.out.println("Vil du kaste terningen for " + spill.getNesteBrikke() + " sin tur? Y / N");
+			String svar = scanner.next();
+			
+			if(svar == null || !svar.equalsIgnoreCase("y")) {
+				break;
+			}
+			
+			spill.spillNesteTur();
+		}
 		
+		scanner.close();
 	}
 
 }

@@ -10,44 +10,85 @@ public class Stigespill {
 	private Brett brett;
 	private Brikke[] brikker;
 	private int runde;
+	private int nesteTur;
 	private Terning terning;
+	private boolean harVunnet;
+	private int forrigeTerningkast;
 	
 	public Stigespill(Brikke[] brikker) {
 		this.brikker = brikker;
 		this.brett = new Brett();
 		this.runde = 1;
+		this.nesteTur = 0;
 		this.terning = new Terning();
+		this.harVunnet = false;
+		this.forrigeTerningkast = -1;
 	}
 	
 	/**
-	 * Starter spillet, utfører runder til spillet er vunnet.
+	 * Spiller neste brikke sin tur, skriver ut logg for turen og om brikke har vunnet spillet.
 	 */
-	public void start() {
-		boolean harVunnet = false;
-		Logg logg = null;
-		
-		while(!harVunnet) {
-			System.out.println("Runde " + runde + ":");
+	public void spillNesteTur() {
+		if(harVunnet) {
+			System.out.println("Dette spillet er ferdigspilt");
+		}
+		else {
+			Brikke brikke = brikker[nesteTur];
+			Logg logg = new Logg();
 			
-			for(Brikke b : brikker) {
-				logg = new Logg();
-				harVunnet = brett.spillTur(b, terning.kastTerning(), logg);
-				skrivLogg(logg);
-				if(harVunnet) {
-					skrivVinner(b);
-					break;
+			if((nesteTur + 1) % brikker.length == 0) {
+				nesteTur = 0;
+				System.out.println();
+			}
+			else {
+				if(nesteTur == 0) {
+					System.out.println("-- RUNDE " + runde + " --");
 				}
-				
-				try {
-					Thread.sleep(200);
-				}
-				catch(Throwable e) {}
+				nesteTur++;
 			}
 			
-			System.out.println();
+			int kast = terning.kastTerning();
+			forrigeTerningkast = kast;
+			harVunnet = brett.spillTur(brikke, kast, logg);
+			skrivLogg(logg);
 			
-			runde++;
+			if(harVunnet) {
+				skrivVinner(brikke);
+			}
+			
+			if((nesteTur + 1) % brikker.length == 0) {
+				runde++;
+			}
+			
+			try {
+				Thread.sleep(200);
+			}
+			catch(Throwable e) {}
 		}
+	}
+	
+	/**
+	 * Sjekker hva forrige terningkast ble.
+	 * @return forrigeTerningkast
+	 */
+	public int getForrigeTerningkast() {
+		return forrigeTerningkast;
+	}
+	
+	/**
+	 * Sjekker om spillet er vunnet
+	 * @return harVunnet
+	 */
+	public boolean harVunnet() {
+		return harVunnet;
+	}
+	
+	/**
+	 * Sjekker hvilken brikke sin tur det er
+	 * @return getFarge() Fargen på neste brikke
+	 */
+	public String getNesteBrikke() {
+		return brikker[nesteTur].getFarge();
 	}
 	
 	/**
@@ -65,7 +106,7 @@ public class Stigespill {
 	private void skrivLogg(Logg logg) {
 		String temp = "flyttet seg fra rute " + (logg.getStartPos() + 1) + " til rute " + (logg.getSluttPos() + 1);
 		if(logg.getLink() > -1) {
-			if(logg.getStartPos() > logg.getSluttPos()) {
+			if(logg.getStartPos() + logg.getKast() > logg.getSluttPos()) {
 				temp = "traff en slange, falt fra rute " + (logg.getLink() + 1) + " til rute " + (logg.getSluttPos() + 1);
 			}
 			else {
@@ -80,6 +121,5 @@ public class Stigespill {
 		}
 		System.out.println(logg.getFarge() + " brikke trillet " + logg.getKast() + " på terningen og " + temp);
 	}
-
 
 }

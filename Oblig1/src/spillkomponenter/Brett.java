@@ -20,7 +20,7 @@ public class Brett {
 			ruter[i] = new Rute();
 		}
 		
-		ruter[0].setLink(39);
+		ruter[1].setLink(39);
 		ruter[32].setLink(2);
 		ruter[23].setLink(4);
 		ruter[7].setLink(9);
@@ -49,22 +49,22 @@ public class Brett {
 	 */
 	public boolean spillTur(Brikke brikke, int kast, Logg logg) {
 		boolean harVunnet = false;
-		logg.setFarge(brikke.getFarge());
 		logg.setStartPos(brikke.getPosisjon());
-		logg.setKast(kast);
 		
 		if(brikke.getFanget()) {
 			if(kast == 6) {
+				brikke.oppdaterKast(-1);
 				brikke.setPosisjon(brikke.getPosisjon() + kast);
+				brikke.setFanget(false);
 			}
 		}
 		else if(kast == 6 && brikke.getFoersteKast() == 6 && brikke.getSisteKast() == 6) {
 			brikke.setPosisjon(0);
 			brikke.setFanget(true);
-			brikke.oppdaterKast(-1);
-			logg.setFanget(true);
+			brikke.oppdaterKast(kast);
 		}
 		else {
+			brikke.oppdaterKast(kast);
 			int tempPos = brikke.getPosisjon() + kast;
 			
 			if(tempPos < 99) {
@@ -82,8 +82,6 @@ public class Brett {
 				harVunnet = true;
 			}
 		}
-		
-		logg.setSluttPos(brikke.getPosisjon());
 		
 		return harVunnet;
 	}

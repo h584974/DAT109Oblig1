@@ -50,7 +50,7 @@ public class Stigespill {
 			int kast = terning.kastTerning();
 			forrigeTerningkast = kast;
 			harVunnet = brett.spillTur(brikke, kast, logg);
-			skrivLogg(logg);
+			skrivLogg(logg,brikke);
 			
 			if(harVunnet) {
 				skrivVinner(brikke);
@@ -103,23 +103,28 @@ public class Stigespill {
 	 * Skriver passende logg for hver tur som spilles
 	 * @param logg Logg-objekt som inneholder detaljer for tur som skal skrives
 	 */
-	private void skrivLogg(Logg logg) {
-		String temp = "flyttet seg fra rute " + (logg.getStartPos() + 1) + " til rute " + (logg.getSluttPos() + 1);
+	private void skrivLogg(Logg logg, Brikke brikke) {
+		String temp = "flyttet seg fra rute " + (logg.getStartPos() + 1) + " til rute " + (brikke.getPosisjon() + 1);
 		if(logg.getLink() > -1) {
-			if(logg.getStartPos() + logg.getKast() > logg.getSluttPos()) {
-				temp = "traff en slange, falt fra rute " + (logg.getLink() + 1) + " til rute " + (logg.getSluttPos() + 1);
+			if(logg.getStartPos() + brikke.getSisteKast() > brikke.getPosisjon()) {
+				temp = "traff en slange, falt fra rute " + (logg.getLink() + 1) + " til rute " + (brikke.getPosisjon() + 1);
 			}
 			else {
-				temp = "traff en stige, klatret fra rute " + (logg.getLink() + 1) + " til rute " + (logg.getSluttPos() + 1);
+				temp = "traff en stige, klatret fra rute " + (logg.getLink() + 1) + " til rute " + (brikke.getPosisjon() + 1);
 			}
 		}
-		else if(logg.isFanget()) {
-			temp = "flyttet ikke på seg, trenger terningkast 6 for å gå videre";
+		else if(brikke.getFanget()) {
+			if(brikke.getSisteKast() == 6) {
+				temp = "ble fanget, trenger terningkast 6 for å gå videre";
+			}
+			else {
+				temp = "er enda fanget, trenger terningkast 6 for å gå videre";
+			}
 		}
- 		else if(logg.getStartPos() == logg.getSluttPos()) {
-			temp = "flyttet ikke på seg, " + (99 - logg.getSluttPos()) + " ruter fra mål!";
+ 		else if(logg.getStartPos() == brikke.getPosisjon()) {
+			temp = "flyttet ikke på seg, " + (99 - brikke.getPosisjon()) + " ruter fra mål!";
 		}
-		System.out.println(logg.getFarge() + " brikke trillet " + logg.getKast() + " på terningen og " + temp);
+		System.out.println(brikke.getFarge() + " brikke trillet " + brikke.getSisteKast() + " på terningen og " + temp);
 	}
 
 }

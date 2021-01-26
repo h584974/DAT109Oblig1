@@ -73,6 +73,7 @@ public class Brukergrensesnitt {
 			String svar = scanner.next();
 			
 			if(svar == null || !svar.equalsIgnoreCase("y")) {
+				System.out.println("Du har valgt å ragequitte du, din unge");
 				break;
 			}
 			
